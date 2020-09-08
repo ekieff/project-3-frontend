@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import HomePage from './Components/Homepage';
+import Hike from './Components/Hike'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 require('dotenv').config()
 var fetch = require('node-fetch');
@@ -16,16 +17,6 @@ let fetchOneHTML = 'https://www.hikingproject.com/data/get-trails-by-id?ids='+RE
 class  App extends Component {
   
 
-  getHikeId = () => {
-
-    fetch(fetchOneHTML)
-    .then(res => res.json())
-    .then(data => this.setState({hikes: data.trails}))
-    .catch(err =>{
-      console.log('Error while fetching trails', err)
-    })
-  }
-
   render(){
 
   return (
@@ -34,8 +25,9 @@ class  App extends Component {
       <div className="App">
         <main>
           <Switch>
-        <Route path = "/hike" component={ HomePage } />
-        </Switch>
+            <Route exact path = "/hike" component={ HomePage } />
+            <Route path ="/hike/:id" component={Hike} />
+          </Switch>
         </main>
   
       </div>
