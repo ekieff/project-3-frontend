@@ -1,22 +1,24 @@
 import React, {Component} from 'react';
 import './App.css';
 import HomePage from './Components/Homepage';
-import HikeShow from './Components/HikeShow'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+require('dotenv').config()
 var fetch = require('node-fetch');
-const api = process.env.API_KEY;
-let lat = '40.0274';
-let long = '-105.2519';
+const API_KEY = process.env.REACT_APP_API_KEY;
+const REACT_APP_HIKE_ID = process.env.REACT_APP_HIKE_ID;
+
+const REACT_APP_LAT = process.env.REACT_APP_LAT;
+const REACT_APP_LONG = process.env.REACT_APP_LONG;
+let fetchAllHTML = 'https://www.hikingproject.com/data/get-trails?lat=' + REACT_APP_LAT +'&lon=' + REACT_APP_LONG +'&maxDistance=10&key=' +API_KEY
+let fetchOneHTML = 'https://www.hikingproject.com/data/get-trails-by-id?ids='+REACT_APP_HIKE_ID +'&key='+ API_KEY
+
 
 class  App extends Component {
-  state = {
-    hikes: []
-  }
-  componentDidMount() {
-    this.getHikes()
-  }
-  getHikes = () => {
-    fetch(`https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200901349-cde9c435c511e1aff377e76663cda4c5`)
+  
+
+  getHikeId = () => {
+
+    fetch(fetchOneHTML)
     .then(res => res.json())
     .then(data => this.setState({hikes: data.trails}))
     .catch(err =>{
@@ -24,20 +26,16 @@ class  App extends Component {
     })
   }
 
-
   render(){
-    let hikes = this.state.hikes.map((hike, i) =>{
-      return <HomePage key={i} hike={hike} />
-    })
 
   return (
 
     <div>
       <div className="App">
         <main>
-
-        {hikes}
-
+          <Switch>
+        <Route path = "/hike" component={ HomePage } />
+        </Switch>
         </main>
   
       </div>

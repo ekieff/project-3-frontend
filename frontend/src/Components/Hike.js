@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
-class HikeShow extends Component{
+class Hike extends Component{
     render(){
         return(
             <div>
@@ -8,9 +9,10 @@ class HikeShow extends Component{
                 <h3>{this.props.location}</h3>
                 <p>{this.props.summary}</p>
                 <h3>{this.props.stars}</h3>
+                <h3> Add to Favorites</h3>
             </div>
         )
     }
 }
 
-export default HikeShow;
+export default Hike;
